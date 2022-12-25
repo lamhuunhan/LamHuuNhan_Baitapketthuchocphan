@@ -1,0 +1,34 @@
+ ˛∫æ   1 À  Transaction  java/lang/Object transactionId Ljava/lang/String; sender Ljava/security/PublicKey; 
+reciepient value F 	signature [B inputs Ljava/util/ArrayList; 	Signature )Ljava/util/ArrayList<LTransactionInput;>; outputs *Ljava/util/ArrayList<LTransactionOutput;>; sequence I <clinit> ()V Code	     LineNumberTable LocalVariableTable <init> K(Ljava/security/PublicKey;Ljava/security/PublicKey;FLjava/util/ArrayList;)V _(Ljava/security/PublicKey;Ljava/security/PublicKey;FLjava/util/ArrayList<LTransactionInput;>;)V
+  !   # java/util/ArrayList
+ " !	  &  	  (  	  *  	  , 	 	  . 
+  this LTransaction; from to LocalVariableTypeTable processTransaction ()Z
+  7 8 5 verifySignature	 : < ; java/lang/System = > out Ljava/io/PrintStream; @ &#Chu ky giao dich xac nhan khong dung!
+ B D C java/io/PrintStream E F println (Ljava/lang/String;)V
+ " H I J iterator ()Ljava/util/Iterator; L N M java/util/Iterator O P next ()Ljava/lang/Object; R TransactionInput	 T V U LHN_Blockchain W X UTXOs Ljava/util/HashMap;	 Q Z [  transactionOutputId
+ ] _ ^ java/util/HashMap ` a get &(Ljava/lang/Object;)Ljava/lang/Object; c TransactionOutput	 Q e f g UTXO LTransactionOutput; L i j 5 hasNext
+  l m n getInputsValue ()F	 T p q  minimumTransaction s java/lang/StringBuilder u Dau vao giao dich qua be: 
+ r w  F
+ r y z { append (F)Ljava/lang/StringBuilder;
+ r } ~  toString ()Ljava/lang/String; Å )Vui long nhap so luong giao dich lon hon 
+  É Ñ  calulateHash	  Ü  
+ b à  â /(Ljava/security/PublicKey;FLjava/lang/String;)V
+ " ã å ç add (Ljava/lang/Object;)Z	 b è ê  id
+ ] í ì î put 8(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+ ] ñ ó a remove i LTransactionInput; leftOver o	 b . total generateSignature (Ljava/security/PrivateKey;)V
+ ° £ ¢ 
+StringUtil § • getStringFromKey '(Ljava/security/Key;)Ljava/lang/String;
+ ß © ® java/lang/String ™ ´ valueOf &(Ljava/lang/Object;)Ljava/lang/String;
+ r ≠ z Æ -(Ljava/lang/String;)Ljava/lang/StringBuilder;
+ ∞ ≤ ± java/lang/Float ~ ≥ (F)Ljava/lang/String;
+ ° µ ∂ ∑ applyECDSASig 0(Ljava/security/PrivateKey;Ljava/lang/String;)[B	  π   
+privateKey Ljava/security/PrivateKey; data
+ ° æ ø ¿ verifyECDSASig 0(Ljava/security/PublicKey;Ljava/lang/String;[B)Z getOutputsValue
+ r √ z ƒ (I)Ljava/lang/StringBuilder;
+ ° ∆ « » applySha256 &(Ljava/lang/String;)Ljava/lang/String; 
+SourceFile Transaction.java !                 	     
+                           
+             %      ≥ ±                              ∞     0*∑  *ª "Y∑ $µ %*ª "Y∑ $µ '*+µ )*,µ +*%µ -*µ %±       "             $  )  /     4    0 / 0     0 1     0 2     0 
+     0    3       0     4 5    À    %*∂ 6ö ≤ 9?∂ A¨*¥ %∂ GMß ,π K ¿ QL+≤ S+¥ Y∂ \¿ bµ d,π h öˇﬂ*∂ k≤ oñú 6≤ 9ª rYt∑ v*∂ k∂ x∂ |∂ A≤ 9ª rYÄ∑ v≤ o∂ x∂ |∂ A¨*∂ k*¥ -fD**∑ Çµ Ö*¥ 'ª bY*¥ +*¥ -*¥ Ö∑ á∂ äW*¥ 'ª bY*¥ )#*¥ Ö∑ á∂ äW*¥ '∂ GNß -π K ¿ bM≤ S,¥ é,∂ ëW-π h öˇ‰*¥ %∂ GNß %-π K ¿ QM,¥ d« ß ≤ S,¥ d¥ é∂ ïW-π h öˇÿ¨       Z          " & # 7 " @ ' K ( d ) | * ~ . à / ê 0 ´ 1 √ 4 ÿ 5 ‰ 4 Ì 9 : ; 9# >    4   % / 0   &  ò ô  à ù ö   ÿ  õ g   ò ô   m n     à     6D*¥ %∂ GNß !-π K ¿ QM,¥ d« ß #,¥ d¥ úbD-π h öˇ‹#Æ           B  C  D ! E + C 4 G         6 / 0    4 ù     ò ô   û ü     y     3ª rY*¥ )∏ †∏ ¶∑ v*¥ +∏ †∂ ¨*¥ -∏ Ø∂ ¨∂ |M*+,∏ ¥µ ∏±           K ) L 2 M         3 / 0     3 ∫ ª  ) 
+ º    8 5     n     6ª rY*¥ )∏ †∏ ¶∑ v*¥ +∏ †∂ ¨*¥ -∏ Ø∂ ¨∂ |L*¥ )+*¥ ∏∏ Ω¨       
+    P ) Q        6 / 0   )  º    ¡ n     w     )D*¥ '∂ GNß -π K ¿ bM#,¥ úbD-π h öˇÈ#Æ           U  V  W  V ' Y         ) / 0    ' ù     õ g   Ñ      x     :≤ `≥ ª rY*¥ )∏ †∏ ¶∑ v*¥ +∏ †∂ ¨*¥ -∏ Ø∂ ¨≤ ∂ ¬∂ |∏ ≈∞           ]  _  ` # a 3 _ 6 ^        : / 0    …     

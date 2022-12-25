@@ -1,0 +1,55 @@
+ ˛∫æ   1 Î  
+StringUtil  java/lang/Object <init> ()V Code
+  	   LineNumberTable LocalVariableTable this LStringUtil; applySha256 &(Ljava/lang/String;)Ljava/lang/String;  SHA-256
+    java/security/MessageDigest   getInstance 1(Ljava/lang/String;)Ljava/security/MessageDigest;  UTF-8
+    java/lang/String   getBytes (Ljava/lang/String;)[B
+  ! " # digest ([B)[B % java/lang/StringBuffer
+ $ 	
+ ( * ) java/lang/Integer + , toHexString (I)Ljava/lang/String;
+  . / 0 length ()I
+ $ 2 3 4 append (C)Ljava/lang/StringBuffer;
+ $ 6 3 7 ,(Ljava/lang/String;)Ljava/lang/StringBuffer;
+ $ 9 : ; toString ()Ljava/lang/String; = java/lang/RuntimeException
+ < ?  @ (Ljava/lang/Throwable;)V B java/lang/Exception input Ljava/lang/String; Ljava/security/MessageDigest; hash [B 	hexString Ljava/lang/StringBuffer; i I hex e Ljava/lang/Exception; applyECDSASig 0(Ljava/security/PrivateKey;Ljava/lang/String;)[B R ECDSA T BC
+ V X W java/security/Signature  Y ?(Ljava/lang/String;Ljava/lang/String;)Ljava/security/Signature;
+ V [ \ ] initSign (Ljava/security/PrivateKey;)V
+  _  ` ()[B
+ V b c d update ([B)V
+ V f g ` sign 
+privateKey Ljava/security/PrivateKey; dsa Ljava/security/Signature; output strByte realSig verifyECDSASig 0(Ljava/security/PublicKey;Ljava/lang/String;[B)Z
+ V r s t 
+initVerify (Ljava/security/PublicKey;)V
+ V v w x verify ([B)Z 	publicKey Ljava/security/PublicKey; data 	signature ecdsaVerify getJson &(Ljava/lang/Object;)Ljava/lang/String; Å java/lang/Error É KUnresolved compilation problem: 
+	GsonBuilder cannot be resolved to a type
+
+ Ä Ö  Ü (Ljava/lang/String;)V getDificultyString
+  â  ä ([C)V
+  å ç é replace (CC)Ljava/lang/String; 
+difficulty getStringFromKey '(Ljava/security/Key;)Ljava/lang/String;
+ ì ï î java/util/Base64 ñ ó 
+getEncoder ()Ljava/util/Base64$Encoder; ô õ ö java/security/Key ú ` 
+getEncoded
+ û † ü java/util/Base64$Encoder ° ¢ encodeToString ([B)Ljava/lang/String; key Ljava/security/Key; getMerkleRoot )(Ljava/util/ArrayList;)Ljava/lang/String; 	Signature 8(Ljava/util/ArrayList<LTransaction;>;)Ljava/lang/String;
+ ™ ¨ ´ java/util/ArrayList ≠ 0 size
+ ™ 	
+ ™ ∞ ± ≤ iterator ()Ljava/util/Iterator; ¥ ∂ µ java/util/Iterator ∑ ∏ next ()Ljava/lang/Object; ∫ Transaction	 π º Ω D transactionId ø ¡ ¿ java/util/List ¬ √ add (Ljava/lang/Object;)Z ¥ ≈ ∆ « hasNext ()Z … java/lang/StringBuilder ø À Ã Õ get (I)Ljava/lang/Object;
+  œ –  valueOf
+ » Ö
+ » ” 3 ‘ -(Ljava/lang/String;)Ljava/lang/StringBuilder;
+ » 9
+  ◊   ø ¨ ⁄   transactions Ljava/util/ArrayList; count previousTreeLayer Ljava/util/List; transaction LTransaction; 	treeLayer 
+merkleRoot LocalVariableTypeTable $Ljava/util/ArrayList<LTransaction;>; $Ljava/util/List<Ljava/lang/String;>; 
+SourceFile StringUtil.java InnerClasses Encoder !               /     *∑ ±    
+                    	       Ú     \∏ L+*∂ ∂  Mª $Y∑ &N6ß * ˇ,3~∏ ':∂ -† 
+-0∂ 1W-∂ 5WÑ,æ°ˇ’-∂ 8∞Lª <Y+∑ >ø    Q R A  
+   .             ,  <  C  M  R  S     H    \ C D    L " E   A F G   9 H I   1 J K  ,  L D  S 	 M N  	 O P     ”     7ºNQS∏ UM,*∂ Z+∂ ^:,∂ a,∂ e:Nß :ª <Y∑ >ø-∞   & ) A  
+   * 
+   #  %  &  '  (  ) # * & + + , 5 .    R    7 h i     7 C D    j k  5  j k   3 l G    m G  #  n G  + 
+ M N  	 o p     ì     %QS∏ UN-*∂ q-+∂ ^∂ a-,∂ u¨Nª <Y-∑ >ø      A  
+       4  5  6  7  8  9    4    % y z     % { D    % | G    } k   	 M N  	 ~      *     
+ª ÄYÇ∑ Ñø    
+       ?       	 á ,     ;     ª Yº∑ à0∂ ã∞    
+       D         è K   	 ê ë     7     ∏ í*π ò ∂ ù∞    
+       H         £ §   	 • ¶  ß    ®   }     µ*∂ ©<ª ™Y∑ ÆM*∂ Ø:ß π ≥ ¿ πN,-¥ ªπ æ Wπ ƒ öˇ„,Nß Zª ™Y∑ ÆN6ß 8-ª »Y,dπ   ¿ ∏ Œ∑ —,π   ¿ ∂ “∂ ’∏ ÷π æ WÑ,π ÿ °ˇ√-π ÿ <-M£ˇß-π ÿ † -π   ¿ ß Ÿ:∞    
+   B    L  N  O ! P , O 6 R 8 T ; U C V I W { V â Y ê Z í T ó ] ≤ ^    H    µ € ‹    ∞ › K   ® ﬁ ﬂ  !  ‡ ·  8 } ‚ ﬂ  F C J K  ≤  „ D  ‰        µ € Â    ® ﬁ Ê  8 } ‚ Ê   Á    Ë È   
+  û ì Í 	

@@ -1,0 +1,42 @@
+Êşº¾   1 ü  LHN_Blockchain  java/lang/Object 
+blockchain Ljava/util/ArrayList; 	Signature "Ljava/util/ArrayList<LVNPT_Nhan;>; UTXOs Ljava/util/HashMap; :Ljava/util/HashMap<Ljava/lang/String;LTransactionOutput;>; 
+difficulty I minimumTransaction F Kho LStore; CuaHang genesisTransaction LTransaction; <clinit> ()V Code  java/util/ArrayList
+     <init>	       java/util/HashMap
+  	  # 	 
+	  %  =ÌÌÍ	  (   LineNumberTable LocalVariableTable
+   this LLHN_Blockchain; main ([Ljava/lang/String;)V 1 java/lang/Error 3 PUnresolved compilation problem: 
+	org.bouncycastle cannot be resolved to a type
+
+ 0 5  6 (Ljava/lang/String;)V isChainValid ()Ljava/lang/Boolean; : java/lang/String
+ 9 <  = ([C)V
+ 9 ? @ A replace (CC)Ljava/lang/String;	  C  	 E G F Transaction H  outputs
+  J K L get (I)Ljava/lang/Object; N TransactionOutput	 M P Q R id Ljava/lang/String;
+  T U V put 8(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object; X 	VNPT_Nhan	 W Z [ R hash
+ W ] ^ _ calculateHash ()Ljava/lang/String;
+ 9 a b c equals (Ljava/lang/Object;)Z	 e g f java/lang/System h i out Ljava/io/PrintStream; k #Ma bam hien tai khong khop
+ m o n java/io/PrintStream p 6 println
+ r t s java/lang/Boolean u v valueOf (Z)Ljava/lang/Boolean;	 W x y R previousHash { #Ma bam khoi truoc khong khop
+ 9 } ~  	substring (II)Ljava/lang/String;   #Khoi nay khong dao duoc do loi!	 W ƒ „  transactions
+ E † ‡ ˆ verifySignature ()Z Š java/lang/StringBuilder Œ #Chu ky so cua giao dich (
+ ‰ 5
+ ‰   ‘ append (I)Ljava/lang/StringBuilder; “ ) khong hop le
+ ‰ •  – -(Ljava/lang/String;)Ljava/lang/StringBuilder;
+ ‰ ˜ ™ _ toString
+ E › œ  getInputsValue ()F
+ E Ÿ    getOutputsValue ¢ 4#cac dau vao khong khop voi dau ra trong giao dich ( ¤ )	 E ¦ §  inputs
+  © ª « iterator ()Ljava/util/Iterator; ­ ¯ ® java/util/Iterator ° ± next ()Ljava/lang/Object; ³ TransactionInput	 ² µ ¶ R transactionOutputId
+  ¸ K ¹ &(Ljava/lang/Object;)Ljava/lang/Object; » )#Cac dau vao tham chieu trong giao dich ( ½ ) bi thieu!	 ² ¿ À Á UTXO LTransactionOutput;	 M Ã Ä  value Æ ) co gia tri khong hop le
+  È É ¹ remove ­ Ë Ì ˆ hasNext	 M Î Ï Ğ 
+reciepient Ljava/security/PublicKey;	 E Î Ó #Giao dich( Õ ) co nguoi nhan khong dung!	 E × Ø Ğ sender Ú #Dau ra cua giao dich ( Ü ) khong dung voi nguoi gui.
+  Ş ß à size ()I â Chuoi khong hop le! currentBlock LVNPT_Nhan; previousBlock 
+hashTarget 	tempUTXOs i 
+tempOutput t currentTransaction input LTransactionInput; output LocalVariableTypeTable addBlock (LVNPT_Nhan;)V
+ W ó ô õ 	mineBlock (I)V
+  ÷ ø c add newBlock 
+SourceFile LHN_Blockchain.java !      	         	 	 
+       	     	     	     	     	             N      » Y· ³ » Y· !³ "³ $&³ '±    )        
+ 	       *             /     *· +±    )        *        , -   	 . /     *     
+» 0Y2· 4¿    )        *      	 7 8    Ä  
+  z» 9Y² $¼· ;0¶ >M» Y· !N-² B´ D¶ IÀ M´ O² B´ D¶ IÀ M¶ SW6§"² ¶ IÀ WK² d¶ IÀ WL*´ Y*¶ \¶ `š ² dj¶ l¸ q°+´ Y*´ w¶ `š ² dz¶ l¸ q°*´ Y² $¶ |,¶ `š ² d€¶ l¸ q°6§*´ ‚¶ IÀ E:¶ …š $² d» ‰Y‹· ¶ ’¶ ”¶ —¶ l¸ q°¶ š¶ •™ $² d» ‰Y¡· ¶ £¶ ”¶ —¶ l¸ q°´ ¥¶ ¨:	§ 	¹ ¬ À ²:-´ ´¶ ·À M:Ç $² d» ‰Yº· ¶ ¼¶ ”¶ —¶ l¸ q°´ ¾´ Â´ Â•™ $² d» ‰Yº· ¶ Å¶ ”¶ —¶ l¸ q°-´ ´¶ ÇW	¹ Ê šÿ}´ D¶ ¨:	§ 	¹ ¬ À M:-´ O¶ SW	¹ Ê šÿá´ D¶ IÀ M´ Í´ Ñ¥ $² d» ‰YÒ· ¶ Ô¶ ”¶ —¶ l¸ q°´ D¶ IÀ M´ Í´ Ö¥ $² d» ‰YÙ· ¶ Û¶ ”¶ —¶ l¸ q°„*´ ‚¶ İ¡ş\„² ¶ İ¡ıÙ² dá¶ l¸ q°    )   º .   L  M  N = Q C S O T ] V k W s X x [ † \  ] “ ` ¥ a ­ b ² g ¸ h Æ j Î k ê l ï n ı o p s7 tE vJ wf xk {| |˜ } €§ s± ƒÊ „Ö ƒà ‡÷ ˆ ‰ ‹/ ŒK P g_ Qm “u ” *   f 
+ O ã ä   ] å ä  g æ R  _ ç 
+  @- è  E b é Á  µª ê   ÆŠ ë  7 p ì í Ê  î Á  ï     _ ç   	 ğ ñ     B     *² $¶ ò² *¶ öW±    )       ˜  ™  š *        ù ä    ú    û
